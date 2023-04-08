@@ -1,0 +1,35 @@
+1. CREATE ENVIRONMENT
+    * specific python version
+    conda create -n djangoenv python=3.6 anaconda    
+    
+    * latest python
+    According to the documentation for conda install,(https://docs.conda.io/projects/conda/en/latest/commands/install.html) 
+    conda will (when no version is specified, it seems) try to install the latest version of the specified package(s).
+
+    Hence, you should be able to get the latest version of python in your new environment by running a command like this.
+    conda create --name=<myEnvNameHere> python
+
+
+2. ACTIVATE THE NEW ENVIRONMENT
+    conda activate djangoenv
+
+3. INSTALL DJANGO IN THE NEW ENVIRONMENT
+    conda install -c anaconda django 
+    
+    or better use pip:
+    python -m pip install django
+
+4. STARTING A DJANGO PROJECT 
+    * with activated environment
+    django-admin startproject my-project-name
+
+5. Move into the project directory
+    cd my-project-name
+
+6. Run the development server
+    python manage.py runserver
+
+! Do NOT USE the Django development server in PRODUCTION !
+
+
+
