@@ -1,0 +1,67 @@
+1. CREATE ENVIRONMENT
+    * specific python version
+    conda create -n djangoenv python=3.6 anaconda    
+    
+    * latest python
+    According to the documentation for conda install,(https://docs.conda.io/projects/conda/en/latest/commands/install.html) 
+    conda will (when no version is specified, it seems) try to install the latest version of the specified package(s).
+
+    Hence, you should be able to get the latest version of python in your new environment by running a command like this.
+    conda create --name=<myEnvNameHere> python
+
+
+2. ACTIVATE THE NEW ENVIRONMENT
+    conda activate djangoenv
+
+3. INSTALL DJANGO IN THE NEW ENVIRONMENT
+    conda install -c anaconda django 
+    
+    or better use pip:
+    python -m pip install django
+
+4. STARTING A DJANGO PROJECT 
+    * with activated environment
+    django-admin startproject my-project-name
+
+5. Move into the project directory
+    cd my-project-name
+
+6. Run the development server
+    python manage.py runserver
+
+! Do NOT USE the Django development server in PRODUCTION !
+
+
+------------------------------------------------------------------------
+7. Adding a new app
+    * with activated environment, cd into the right folder of the Django project
+    python manage.py startapp appname
+
+once created, add appname to the installed_apps list in settings.py of django project
+django app: python package, specifically intended for use in django projects
+typical django project consists of multiple apps, a way for organizing the code, 
+related things are put together in an app (info, touring schedule, tickets, etc.)
+apps can be reused between projects
+keep apps small and simple, help maintain code modular & organized
+unix philosophy: do one thing and do it well
+should have a clear, simple purpopse:
+normally the purpose should be explained with a single sentence, otherwise the app is too complex
+
+
+8. Adding a page
+    in views.py - add a view function (e.g. welcome, about...)
+    def welcome(request):
+        return HttpResponse("Welcome to my page!"
+
+9. Assign the page to URL
+    to be able to visit the page added above, we need to assign it to an URL:
+    import the respective view and add a call to path, a function that makes a mapping from a URL to a view:
+    in urls.py    
+    from website.views import welcome
+    urlpatterns = [
+        path('', welcome), #'': empty string = index, root page of the site
+        ......
+    ]
+
+Running Initial Migrations
+Let's see some of this in practice. Before we even start writing our own model classes, we can already run some migrations. Let's do that. I'm going to start by taking a step back and look at the current situation. First of all, looking at settings.py, we notice that there are a number of apps included by default in our Django projects. We can see them here in the INSTALLED_APPS list, admin, auth, contenttypes, and more. Interestingly, we see these same names pop up somewhere else as well. When we start our server with the runserver command like this, it shows this message: You have 17 unapplied migrations. And it shows you the names of some apps here, admin, auth, contenttypes, sessions. Each migration is a Python script that makes a change to the database corresponding to some piece of Python code in a model class. And there are apparently 17 migrations for these apps. So, apparently, these apps includes model classes, and Django wants to create database tables to store data from those model classes in the database. I can ask Django which migrations are waiting at the moment. First, I'm going to stop the server. And then I'm saying python manage.py show migrations. And we see here that the admin app has three migrations waiting, the auth app has 11, etc. Each of these lines you see here represents some change to the database. And mostly they are about creating the correct table structure. The next step is to apply the migrations with the command python manage.py migrate. This runs all currently pending migrations. Can we check what the result was? Actually, yes. Remember that our database is stored in this file db.sqlite3. It was created automatically when we were on the server, and at that moment, it was empty. But right now it should be different because we just ran some migrations and created some tables. Can we check that? Actually, yes. We can ask Django to make a connection with the database using the command python manage.py dbshell. Please note that this command might not work for you because you may need to install SQLite separately. In that case, don't worry. You don't need to be able to do this. I just want to show you what the database now looks like. So you can just as well sit back and watch for now. So now I have a connection with the SQLite database, and I can ask it to show the tables that were created, and you can see that there are now 10 tables. All of these were just now created when I ran the migrations. Note that each table name is prefixed with either auth or Django. Most of the time, this is the name of the app it belongs to, so we see that the auth app provides us with tables for users, groups, and permissions. And, of course, this means that for each of the tables, there will be a model class in the Python code for the auth app. There are also a number of tables with the prefix django. Those don't belong to any specific app. Let's take a short look at an important table, django_migrations. This is an SQL select statement. If you don't know SQL, that's okay. You don't need to write any to be able to use Django. And here we see a line for every migration that has been executed. It shows each migration we just ran with the exact time that it happens. So this is where Django records the current state of the database. This makes it possible to compare the model classes in your code at any moment with the tables. Now let's exit this and go on to write some more code of our own.
