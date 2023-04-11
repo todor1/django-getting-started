@@ -10,7 +10,7 @@ class Room(models.Model):
     def __str__(self) -> str:
         return f"{self.name}: room {self.room_number} on floor {self.floor}"
     
-    
+     
 class Meeting(models.Model):
     title = models.CharField(max_length=200)
     date = models.DateField()

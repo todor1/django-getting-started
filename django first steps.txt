@@ -105,3 +105,9 @@ This should kill all the processes associated with port 8000.
 For osx users you can use sudo lsof -t -i tcp:8000 | xargs kill -9
 
 ################################################################################################
+
+Render function / REQUEST
+Now the first argument we give to render is request,
+which is also the first argument of our view function. 
+This is an object that holds all kinds of information about the request
+that the browser sent, like cookies, HTTP headers, and more.

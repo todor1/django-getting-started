@@ -4,7 +4,12 @@ from datetime import datetime
 
 # Create your views here.
 def welcome(request):
-    return HttpResponse("Welcome to the Meeting Planner!")
+    # return render(request, "website/welcome.html")
+    return render(request, "website/welcome.html",
+                  {'message': 'My message created from the Views welcome function.'})
+
+# def welcome(request):
+#     return HttpResponse("Welcome to the Meeting Planner!")
 
 def date(request):
     return HttpResponse(f'This page was served at {datetime.now():%Y-%m-%d %H:%M:%S}')
