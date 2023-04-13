@@ -111,3 +111,15 @@ Now the first argument we give to render is request,
 which is also the first argument of our view function. 
 This is an object that holds all kinds of information about the request
 that the browser sent, like cookies, HTTP headers, and more.
+
+################################################################################################
+RETRIEVING MODEL DATA
+model classes have a .objects attribute that let you retrieve data
+* get all objects, (retrieves all rows from the table):
+    meeting = Meeting.objects.all()
+* get objects count: 
+    num_meetings = Meeting.objects.count()
+* get a specific object: 
+    num_meetings = Meeting.objects.get(pk=5)
+    
+

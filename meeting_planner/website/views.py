@@ -2,11 +2,15 @@ from django.shortcuts import render
 from django.http import HttpResponse
 from datetime import datetime
 
+from meetings.models import Meeting
+
 # Create your views here.
 def welcome(request):
     # return render(request, "website/welcome.html")
+    # return render(request, "website/welcome.html",
+    #               {'message': 'My message created from the Views welcome function.'})
     return render(request, "website/welcome.html",
-                  {'message': 'My message created from the Views welcome function.'})
+                  {"num_meetings": Meeting.objects.count()})
 
 # def welcome(request):
 #     return HttpResponse("Welcome to the Meeting Planner!")
