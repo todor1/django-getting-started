@@ -123,3 +123,41 @@ model classes have a .objects attribute that let you retrieve data
     num_meetings = Meeting.objects.get(pk=5)
     
 
+################################################################################################
+URL Configuration
+Named urls: allow for referring to a url by name passed as 3rd argument via {% url 'name' ... %} functionality in templates
+option to add arguments to the view function: here meeting.id passed as argument to the respective view function
+
+* urls.py:
+    urlpatterns = [
+        path('<int:id>', views.detail, name='detail')
+    ]
+* template.html:
+    <a href="{% url 'detail' meeting.id %}">{{ meeting.title }}</a>
+
+Template language: For Loop 
+    - curly braces & percent signs
+    - execute a template tag
+        <ul>
+            {% for room  in rooms %}
+            <li>{{ room.name }}</li>
+            {% endfor %}
+        </ul>
+    - here rooms is a variable from template context 
+    - rooms = name of the context dictionary, database records returned in a list structure via the view function
+
+
+If we have an app with its own views, the best practice is to also give it its own URL Configuration inside a file urls.py in the app folder
+in the project-wide urls.py we include the app-specific urlpatterns:
+* project-wide:
+    from django.urls import include, path
+    urlpatterns = [path('meetings/', include('meetings.urls'))]
+    include function takes as a string argument the name of the module that contains the url config
+* app-specific:
+    from django.urls import path
+    from .views import detail
+    urlpatterns = [path('<int:id>', detail)]
+
+All the app url mappings will be included in the project urlpatterns prepended with the first argument that we pass here as a prefix (meetings/)
+
+

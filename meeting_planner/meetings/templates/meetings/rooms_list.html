@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Rooms</title>
+</head>
+<body>
+    <h1>Rooms</h1>
+    <ul>
+        {% for room  in rooms %} 
+            <li>{{ room }}</li>
+        {% endfor %}
+
+        {% comment %} My test below: rooms/test_key here refers to the key in the context/dictionary 
+                        rendered via the views->rooms_list function  {% endcomment %}         
+        {% comment %} {% for room  in test_key %} {% endcomment %}
+        {% comment %} <li>{{ room.name }} on floor {{ room.floor }}</li> {% endcomment %}
+    </ul>
+
+    <a href="{% url 'welcome' %}">Home</a>
+</body>
+</html>
